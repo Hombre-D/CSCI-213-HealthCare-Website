@@ -1,0 +1,40 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 15
+VisualStudioVersion = 15.0.26730.10
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{E24C65DC-7377-472B-9ABA-BC803B73C61A}") = "AChangeOfHeartClinic", ".", "{DDA63DF2-9846-49D5-902E-8295EC77C0AB}"
+	ProjectSection(WebsiteProperties) = preProject
+		TargetFrameworkMoniker = ".NETFramework,Version%3Dv4.6.1"
+		Debug.AspNetCompiler.VirtualPath = "/localhost_59071"
+		Debug.AspNetCompiler.PhysicalPath = "..\AChangeOfHeartClinic\"
+		Debug.AspNetCompiler.TargetPath = "PrecompiledWeb\localhost_59071\"
+		Debug.AspNetCompiler.Updateable = "true"
+		Debug.AspNetCompiler.ForceOverwrite = "true"
+		Debug.AspNetCompiler.FixedNames = "false"
+		Debug.AspNetCompiler.Debug = "True"
+		Release.AspNetCompiler.VirtualPath = "/localhost_59071"
+		Release.AspNetCompiler.PhysicalPath = "..\AChangeOfHeartClinic\"
+		Release.AspNetCompiler.TargetPath = "PrecompiledWeb\localhost_59071\"
+		Release.AspNetCompiler.Updateable = "true"
+		Release.AspNetCompiler.ForceOverwrite = "true"
+		Release.AspNetCompiler.FixedNames = "false"
+		Release.AspNetCompiler.Debug = "False"
+		VWDPort = "59071"
+	EndProjectSection
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{DDA63DF2-9846-49D5-902E-8295EC77C0AB}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{DDA63DF2-9846-49D5-902E-8295EC77C0AB}.Debug|Any CPU.Build.0 = Debug|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {D6AD0901-BE62-4EF2-BF37-34273FE883A4}
+	EndGlobalSection
+EndGlobal

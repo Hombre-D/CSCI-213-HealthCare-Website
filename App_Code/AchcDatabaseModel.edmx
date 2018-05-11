@@ -1,0 +1,405 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+    <Schema Namespace="AchcDatabaseModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="AppointmentTable">
+          <Key>
+            <PropertyRef Name="AppointmentId" />
+          </Key>
+          <Property Name="AppointmentId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="PatientUserName" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="DoctorUserName" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="DateAndTime" Type="datetime" Nullable="false" />
+          <Property Name="Description" Type="varchar" MaxLength="200" Nullable="false" />
+          <Property Name="Confirmed" Type="bit" Nullable="false" />
+        </EntityType>
+        <EntityType Name="DepartmentTable">
+          <Key>
+            <PropertyRef Name="DepartmentId" />
+          </Key>
+          <Property Name="DepartmentId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="HospitalId" Type="int" Nullable="false" />
+          <Property Name="Name" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="Email" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="Phone" Type="varchar" MaxLength="10" Nullable="false" />
+        </EntityType>
+        <EntityType Name="DoctorTable">
+          <Key>
+            <PropertyRef Name="DoctorId" />
+          </Key>
+          <Property Name="DoctorId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="DepartmentId" Type="int" Nullable="false" />
+          <Property Name="UserName" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="Name" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="Email" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="Phone" Type="varchar" MaxLength="10" Nullable="false" />
+        </EntityType>
+        <EntityType Name="HospitalTable">
+          <Key>
+            <PropertyRef Name="HospitalId" />
+          </Key>
+          <Property Name="HospitalId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Name" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="Address" Type="varchar" MaxLength="100" Nullable="false" />
+          <Property Name="City" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="State" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="Phone" Type="varchar" MaxLength="10" Nullable="false" />
+        </EntityType>
+        <EntityType Name="MessageTable">
+          <Key>
+            <PropertyRef Name="MessageId" />
+          </Key>
+          <Property Name="MessageId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="UserNameTo" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="UserNameFrom" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="Date" Type="datetime" Nullable="false" />
+          <Property Name="MessageSubject" Type="varchar" MaxLength="100" Nullable="false" />
+          <Property Name="MessageBody" Type="varchar" MaxLength="1000" Nullable="false" />
+        </EntityType>
+        <EntityType Name="PatientTable">
+          <Key>
+            <PropertyRef Name="PatientId" />
+          </Key>
+          <Property Name="PatientId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="DoctorId" Type="int" Nullable="false" />
+          <Property Name="UserName" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="Name" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="Email" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="Phone" Type="varchar" MaxLength="10" Nullable="false" />
+        </EntityType>
+        <EntityType Name="UserTable">
+          <Key>
+            <PropertyRef Name="UserId" />
+          </Key>
+          <Property Name="UserId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="UserName" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="UserType" Type="varchar" MaxLength="50" Nullable="false" />
+        </EntityType>
+        <!--Errors Found During Generation:
+warning 6035: The relationship 'FK_AppointmentDoctorUserName' has columns that are not part of the key of the table on the primary side of the relationship. The relationship was excluded.
+        <Association Name="FK_AppointmentDoctorUserName" />-->
+        <!--Errors Found During Generation:
+warning 6035: The relationship 'FK_ApppointmentPatientUserName' has columns that are not part of the key of the table on the primary side of the relationship. The relationship was excluded.
+        <Association Name="FK_ApppointmentPatientUserName" />-->
+        <Association Name="FK_DepartmentId">
+          <End Role="DepartmentTable" Type="Self.DepartmentTable" Multiplicity="1" />
+          <End Role="DoctorTable" Type="Self.DoctorTable" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="DepartmentTable">
+              <PropertyRef Name="DepartmentId" />
+            </Principal>
+            <Dependent Role="DoctorTable">
+              <PropertyRef Name="DepartmentId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_DoctorId">
+          <End Role="DoctorTable" Type="Self.DoctorTable" Multiplicity="1" />
+          <End Role="PatientTable" Type="Self.PatientTable" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="DoctorTable">
+              <PropertyRef Name="DoctorId" />
+            </Principal>
+            <Dependent Role="PatientTable">
+              <PropertyRef Name="DoctorId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <!--Errors Found During Generation:
+warning 6035: The relationship 'FK_DoctorUserName' has columns that are not part of the key of the table on the primary side of the relationship. The relationship was excluded.
+        <Association Name="FK_DoctorUserName" />-->
+        <Association Name="FK_HospitalId">
+          <End Role="HospitalTable" Type="Self.HospitalTable" Multiplicity="1" />
+          <End Role="DepartmentTable" Type="Self.DepartmentTable" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="HospitalTable">
+              <PropertyRef Name="HospitalId" />
+            </Principal>
+            <Dependent Role="DepartmentTable">
+              <PropertyRef Name="HospitalId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <!--Errors Found During Generation:
+warning 6035: The relationship 'FK_PatientUserName' has columns that are not part of the key of the table on the primary side of the relationship. The relationship was excluded.
+        <Association Name="FK_PatientUserName" />-->
+        <!--Errors Found During Generation:
+warning 6035: The relationship 'FK_UserNameFrom' has columns that are not part of the key of the table on the primary side of the relationship. The relationship was excluded.
+        <Association Name="FK_UserNameFrom" />-->
+        <!--Errors Found During Generation:
+warning 6035: The relationship 'FK_UserNameTo' has columns that are not part of the key of the table on the primary side of the relationship. The relationship was excluded.
+        <Association Name="FK_UserNameTo" />-->
+        <EntityContainer Name="AchcDatabaseModelStoreContainer">
+          <EntitySet Name="AppointmentTable" EntityType="Self.AppointmentTable" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="DepartmentTable" EntityType="Self.DepartmentTable" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="DoctorTable" EntityType="Self.DoctorTable" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="HospitalTable" EntityType="Self.HospitalTable" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="MessageTable" EntityType="Self.MessageTable" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="PatientTable" EntityType="Self.PatientTable" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="UserTable" EntityType="Self.UserTable" Schema="dbo" store:Type="Tables" />
+          <AssociationSet Name="FK_DepartmentId" Association="Self.FK_DepartmentId">
+            <End Role="DepartmentTable" EntitySet="DepartmentTable" />
+            <End Role="DoctorTable" EntitySet="DoctorTable" />
+          </AssociationSet>
+          <AssociationSet Name="FK_DoctorId" Association="Self.FK_DoctorId">
+            <End Role="DoctorTable" EntitySet="DoctorTable" />
+            <End Role="PatientTable" EntitySet="PatientTable" />
+          </AssociationSet>
+          <AssociationSet Name="FK_HospitalId" Association="Self.FK_HospitalId">
+            <End Role="HospitalTable" EntitySet="HospitalTable" />
+            <End Role="DepartmentTable" EntitySet="DepartmentTable" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema></edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="AchcDatabaseModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityType Name="AppointmentTable">
+          <Key>
+            <PropertyRef Name="AppointmentId" />
+          </Key>
+          <Property Name="AppointmentId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="PatientUserName" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="DoctorUserName" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="DateAndTime" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="Description" Type="String" MaxLength="200" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="Confirmed" Type="Boolean" Nullable="false" />
+        </EntityType>
+        <EntityType Name="DepartmentTable">
+          <Key>
+            <PropertyRef Name="DepartmentId" />
+          </Key>
+          <Property Name="DepartmentId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="HospitalId" Type="Int32" Nullable="false" />
+          <Property Name="Name" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="Email" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="Phone" Type="String" MaxLength="10" FixedLength="false" Unicode="false" Nullable="false" />
+          <NavigationProperty Name="DoctorTables" Relationship="Self.FK_DepartmentId" FromRole="DepartmentTable" ToRole="DoctorTable" />
+          <NavigationProperty Name="HospitalTable" Relationship="Self.FK_HospitalId" FromRole="DepartmentTable" ToRole="HospitalTable" />
+        </EntityType>
+        <EntityType Name="DoctorTable">
+          <Key>
+            <PropertyRef Name="DoctorId" />
+          </Key>
+          <Property Name="DoctorId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="DepartmentId" Type="Int32" Nullable="false" />
+          <Property Name="UserName" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="Name" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="Email" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="Phone" Type="String" MaxLength="10" FixedLength="false" Unicode="false" Nullable="false" />
+          <NavigationProperty Name="DepartmentTable" Relationship="Self.FK_DepartmentId" FromRole="DoctorTable" ToRole="DepartmentTable" />
+          <NavigationProperty Name="PatientTables" Relationship="Self.FK_DoctorId" FromRole="DoctorTable" ToRole="PatientTable" />
+        </EntityType>
+        <EntityType Name="HospitalTable">
+          <Key>
+            <PropertyRef Name="HospitalId" />
+          </Key>
+          <Property Name="HospitalId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Name" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="Address" Type="String" MaxLength="100" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="City" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="State" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="Phone" Type="String" MaxLength="10" FixedLength="false" Unicode="false" Nullable="false" />
+          <NavigationProperty Name="DepartmentTables" Relationship="Self.FK_HospitalId" FromRole="HospitalTable" ToRole="DepartmentTable" />
+        </EntityType>
+        <EntityType Name="MessageTable">
+          <Key>
+            <PropertyRef Name="MessageId" />
+          </Key>
+          <Property Name="MessageId" Type="Int32" Nullable="false" />
+          <Property Name="UserNameTo" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="UserNameFrom" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="MessageSubject" Type="String" MaxLength="100" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="MessageBody" Type="String" MaxLength="1000" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="Date" Type="DateTime" Nullable="false" Precision="3" />
+        </EntityType>
+        <EntityType Name="PatientTable">
+          <Key>
+            <PropertyRef Name="PatientId" />
+          </Key>
+          <Property Name="PatientId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="DoctorId" Type="Int32" Nullable="false" />
+          <Property Name="UserName" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="Name" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="Email" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="Phone" Type="String" MaxLength="10" FixedLength="false" Unicode="false" Nullable="false" />
+          <NavigationProperty Name="DoctorTable" Relationship="Self.FK_DoctorId" FromRole="PatientTable" ToRole="DoctorTable" />
+        </EntityType>
+        <EntityType Name="UserTable">
+          <Key>
+            <PropertyRef Name="UserId" />
+          </Key>
+          <Property Name="UserId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="UserName" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="UserType" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+        </EntityType>
+        <Association Name="FK_DepartmentId">
+          <End Role="DepartmentTable" Type="Self.DepartmentTable" Multiplicity="1" />
+          <End Role="DoctorTable" Type="Self.DoctorTable" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="DepartmentTable">
+              <PropertyRef Name="DepartmentId" />
+            </Principal>
+            <Dependent Role="DoctorTable">
+              <PropertyRef Name="DepartmentId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_HospitalId">
+          <End Role="HospitalTable" Type="Self.HospitalTable" Multiplicity="1" />
+          <End Role="DepartmentTable" Type="Self.DepartmentTable" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="HospitalTable">
+              <PropertyRef Name="HospitalId" />
+            </Principal>
+            <Dependent Role="DepartmentTable">
+              <PropertyRef Name="HospitalId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_DoctorId">
+          <End Role="DoctorTable" Type="Self.DoctorTable" Multiplicity="1" />
+          <End Role="PatientTable" Type="Self.PatientTable" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="DoctorTable">
+              <PropertyRef Name="DoctorId" />
+            </Principal>
+            <Dependent Role="PatientTable">
+              <PropertyRef Name="DoctorId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="AchcDatabaseEntities" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="AppointmentTables" EntityType="Self.AppointmentTable" />
+          <EntitySet Name="DepartmentTables" EntityType="Self.DepartmentTable" />
+          <EntitySet Name="DoctorTables" EntityType="Self.DoctorTable" />
+          <EntitySet Name="HospitalTables" EntityType="Self.HospitalTable" />
+          <EntitySet Name="MessageTables" EntityType="Self.MessageTable" />
+          <EntitySet Name="PatientTables" EntityType="Self.PatientTable" />
+          <EntitySet Name="UserTables" EntityType="Self.UserTable" />
+          <AssociationSet Name="FK_DepartmentId" Association="Self.FK_DepartmentId">
+            <End Role="DepartmentTable" EntitySet="DepartmentTables" />
+            <End Role="DoctorTable" EntitySet="DoctorTables" />
+          </AssociationSet>
+          <AssociationSet Name="FK_HospitalId" Association="Self.FK_HospitalId">
+            <End Role="HospitalTable" EntitySet="HospitalTables" />
+            <End Role="DepartmentTable" EntitySet="DepartmentTables" />
+          </AssociationSet>
+          <AssociationSet Name="FK_DoctorId" Association="Self.FK_DoctorId">
+            <End Role="DoctorTable" EntitySet="DoctorTables" />
+            <End Role="PatientTable" EntitySet="PatientTables" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="AchcDatabaseModelStoreContainer" CdmEntityContainer="AchcDatabaseEntities">
+          <EntitySetMapping Name="AppointmentTables">
+            <EntityTypeMapping TypeName="AchcDatabaseModel.AppointmentTable">
+              <MappingFragment StoreEntitySet="AppointmentTable">
+                <ScalarProperty Name="AppointmentId" ColumnName="AppointmentId" />
+                <ScalarProperty Name="PatientUserName" ColumnName="PatientUserName" />
+                <ScalarProperty Name="DoctorUserName" ColumnName="DoctorUserName" />
+                <ScalarProperty Name="DateAndTime" ColumnName="DateAndTime" />
+                <ScalarProperty Name="Description" ColumnName="Description" />
+                <ScalarProperty Name="Confirmed" ColumnName="Confirmed" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="DepartmentTables">
+            <EntityTypeMapping TypeName="AchcDatabaseModel.DepartmentTable">
+              <MappingFragment StoreEntitySet="DepartmentTable">
+                <ScalarProperty Name="DepartmentId" ColumnName="DepartmentId" />
+                <ScalarProperty Name="HospitalId" ColumnName="HospitalId" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="Email" ColumnName="Email" />
+                <ScalarProperty Name="Phone" ColumnName="Phone" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="DoctorTables">
+            <EntityTypeMapping TypeName="AchcDatabaseModel.DoctorTable">
+              <MappingFragment StoreEntitySet="DoctorTable">
+                <ScalarProperty Name="DoctorId" ColumnName="DoctorId" />
+                <ScalarProperty Name="DepartmentId" ColumnName="DepartmentId" />
+                <ScalarProperty Name="UserName" ColumnName="UserName" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="Email" ColumnName="Email" />
+                <ScalarProperty Name="Phone" ColumnName="Phone" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="HospitalTables">
+            <EntityTypeMapping TypeName="AchcDatabaseModel.HospitalTable">
+              <MappingFragment StoreEntitySet="HospitalTable">
+                <ScalarProperty Name="HospitalId" ColumnName="HospitalId" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="Address" ColumnName="Address" />
+                <ScalarProperty Name="City" ColumnName="City" />
+                <ScalarProperty Name="State" ColumnName="State" />
+                <ScalarProperty Name="Phone" ColumnName="Phone" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="MessageTables">
+            <EntityTypeMapping TypeName="AchcDatabaseModel.MessageTable">
+              <MappingFragment StoreEntitySet="MessageTable">
+                <ScalarProperty Name="Date" ColumnName="Date" />
+                <ScalarProperty Name="MessageId" ColumnName="MessageId" />
+                <ScalarProperty Name="UserNameTo" ColumnName="UserNameTo" />
+                <ScalarProperty Name="UserNameFrom" ColumnName="UserNameFrom" />
+                <ScalarProperty Name="MessageSubject" ColumnName="MessageSubject" />
+                <ScalarProperty Name="MessageBody" ColumnName="MessageBody" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="PatientTables">
+            <EntityTypeMapping TypeName="AchcDatabaseModel.PatientTable">
+              <MappingFragment StoreEntitySet="PatientTable">
+                <ScalarProperty Name="PatientId" ColumnName="PatientId" />
+                <ScalarProperty Name="DoctorId" ColumnName="DoctorId" />
+                <ScalarProperty Name="UserName" ColumnName="UserName" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="Email" ColumnName="Email" />
+                <ScalarProperty Name="Phone" ColumnName="Phone" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="UserTables">
+            <EntityTypeMapping TypeName="AchcDatabaseModel.UserTable">
+              <MappingFragment StoreEntitySet="UserTable">
+                <ScalarProperty Name="UserId" ColumnName="UserId" />
+                <ScalarProperty Name="UserName" ColumnName="UserName" />
+                <ScalarProperty Name="UserType" ColumnName="UserType" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="true" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="false" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="None" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>
